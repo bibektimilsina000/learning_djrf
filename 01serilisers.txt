@@ -1,0 +1,68 @@
+python json
+
+
+dumps(data)
+    -used to convert python object into json string.
+    eg:-
+    import json
+    python_data={'name':'cicero','roll':45}
+    json_data=json.dumps(python_data)
+
+loads(json_data)
+    -used to convert json to python objects
+    parse_data=json.loads(json_data)
+
+
+serializers
+
+    - helps to convert complex datatype like python_datatypes into 
+        json,xml or other content types which is understandable by frontend.
+
+
+    - serializers are also responsible for deserialization  which helps to
+        convert parse_data back into complex data after validating
+        the incomming data.
+
+
+        complex data ------> python native datatype -------> json_data
+                    serialization                   render in into json
+
+
+
+
+jsonRenderer
+
+    -used to render serilised data into json 
+
+
+    -import jsonRenderer 
+
+    -from restframework.renders
+    
+    render data into json
+
+    json_data = JSONRenderer().render(serizer.data)
+
+
+
+code in project1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

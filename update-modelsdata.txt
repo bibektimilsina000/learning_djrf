@@ -1,0 +1,27 @@
+Update data using serilisers
+
+
+complete Update
+
+by deafult serilisers must be passed values for all required fields or they will rise validation errors.
+
+Required All Data From FrontEnd/Client
+
+serilisers=Studentserilizer(stu,data=pythondata)
+
+if serilisers.is_valid():
+    serilisers.save()
+
+
+
+Partial Update - All Data not required
+
+seriliser=Studentserilizer(stu,data=pythondata,Partial=True)
+
+if seriliser.is_valid:
+seriliser.save()
+
+
+Crud Api project in project4
+
+

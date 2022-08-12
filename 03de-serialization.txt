@@ -1,0 +1,52 @@
+json data to native python datatype to complex datatype
+
+
+1 bytesio()
+imort io
+stream=io.bytesio(json_data)
+
+
+2 JSONParser()
+    -used to convert json_data into python native datatypes
+
+    eg:-
+    from restframework imort JSONParser
+
+    parse_data=JSONParser().parse(stream)
+
+
+De-serilisation
+
+convert parse data into complex datatypes
+
+how to:
+    creating Serilizer object
+
+    Serilizer=StudentSeriliser(data)
+
+    validate data
+    if : Serilizer.is_valid()
+
+    data=Serilizer.validate_data
+else:
+    errors= Serilizer.errors
+
+
+create or insherd data 
+
+
+from restframework imort Serilizer
+
+class StudentSeriliser(seriliazer.Serilizer):
+    name=seriliazer.charfield()
+    roll=seriliazer.intfiel()
+    city=seriliazer.charfield()
+
+def create(self,validate_data)
+    return Student.object.create(**validate_data)
+
+
+
+
+
+code in project 3
