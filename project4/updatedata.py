@@ -17,4 +17,18 @@ def getData(id=None):
     print(data)
 
 
-getData(2)
+# getData(2)
+
+
+def post_data():
+
+    data = {"name": "kamal", "roll": 423, "city": "rachi"}
+
+    json_data = json.dumps(data)
+
+    r = requests.post(url=url, data=json_data)
+    data = r.json()
+    print(data)
+
+
+post_data()
