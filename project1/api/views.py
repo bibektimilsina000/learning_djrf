@@ -4,6 +4,7 @@ from .models import Student
 from .serializer import studentSerializers
 from rest_framework.renderers import JSONRenderer
 
+
 # one by one
 def student_detail(request, pk):
     stu = Student.objects.get(id=pk)

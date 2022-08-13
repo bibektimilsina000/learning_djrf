@@ -2,7 +2,7 @@ import json
 import requests
 
 
-url = "http://127.0.0.1:8000/api/stu"
+url = "http://127.0.0.1:8000/api/stu/"
 
 
 def getData(id=None):
@@ -11,24 +11,27 @@ def getData(id=None):
     if id is not None:
         data = {"id": id}
     json_data = json.dumps(data)
-    r = requests.get(url=url, data=json_data)
+    headers = {"Content-Type": "application/json"}
+    r = requests.get(url=url, data=json_data, headers=headers)
 
     data = r.json()
     print(data)
 
 
-# getData(2)
+getData()
 
 
 def post_data():
 
-    data = {"name": "kamal", "roll": 423, "city": "rachi"}
+    data = {"name": "bimal", "roll": 498, "city": "panpauti"}
 
     json_data = json.dumps(data)
+    headers = {"Content-Type": "application/json"}
 
-    r = requests.post(url=url, data=json_data)
+    r = requests.post(url=url, data=json_data, headers=headers)
+
     data = r.json()
     print(data)
 
 
-post_data()
+# post_data()

@@ -6,4 +6,5 @@ data = requests.get(URL)
 
 data = data.json()
 
+
 print(data)

@@ -6,18 +6,19 @@ from api.serilizer import StudentSerilizers
 from rest_framework.renderers import JSONRenderer
 from django.http import HttpResponse
 from django.http.response import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
+@csrf_exempt
 def createStd(request):
     if request.method == "GET":
         json_data = request.body
-        print(json_data)
         stream = io.BytesIO(json_data)
 
-        # pythonData = JSONParser().parse(stream)
+        pythonData = JSONParser().parse(stream)
 
-        # id = stream.get("id", None)
-        id = 2
+        id = pythonData.get("id", None)
+
         if id is not None:
             stu = Student.objects.get(id=id)
             serilizer = StudentSerilizers(stu)
