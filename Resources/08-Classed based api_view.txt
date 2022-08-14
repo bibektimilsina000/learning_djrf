@@ -1,0 +1,90 @@
+Function Based View
+
+it  help to return 405 error autometically
+
+by deafult get method is accepted. other methods will rospond with 405 not allowed 
+
+@api_view() ==> it accept get method
+
+@api_view(['GET','POST','PUT','Delete']) ==>other methods should be defined 
+
+code:
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status 
+
+for get request 
+@api_view(['GET'])
+
+    if request.method == 'GET':
+        stu=Student.object.all()
+        serializer=(stu,many=True)
+        return Response(serializer.data)
+
+
+for post request
+
+@api(['POST'])  :::NOTE:::==> all method can use in only one api_view
+
+    if request.method == 'POST':
+        serializer=StudentSerializer(request.data)
+        if serializer.is_valid():
+            serializer.save()
+            res={'msg':'Data Created'}
+            return Response(res,status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.error.status.HTTP_400_BAD_REQUEST)
+
+
+METHODS
+
+GET ===> To get data from the backend
+POST ===> To Send data to the backend
+PUT ===> To update data compleatly 
+PATCH ===> To update data partially
+DELETE ===> To Delete data 
+
+
+
+Request
+
+request.data ===> request.data return parsed content of the request body.
+return.methed ===> request.method return the uppercased strig representation of the request's     HTTPmethod
+
+request.query_params ===> request.query_params is more correctly named synonoym for request.GET.
+
+
+
+Response
+REST framework supports HTTP content negotiaton by providing a Response class which allows you to 
+return cantont can ba rendered into multiple content types,depending on the client request.
+
+
+Response object are initialized with data,which should consist of native Python primitive.Rest Framework then use standered HTTP content negotiaton to determine how it should render the final 
+response content.
+
+response class simply provides a nicer interface for returning content-negotiated Web API response ,that can be rendered to multiple formats.
+
+
+syntax: Response(data,status=None,template_name=None,headers=None,content_type=None)
+
+
+data ==> The unrendered,serialized data for the response
+
+status==> A status code for the response.Defaults to 200
+
+template_name ==> A template name to used only if HTMLRender or some other custom template 
+                    render is the accepted renderer for the response
+
+headers ==> A dictionary of HTTPHeaders to use in the response
+
+
+content_type ==> The content_type of the response:Typically,this will be set autometically by the 
+                    renderer as determined by content negotiation, but there may be some cases where you need to specify the content type esplicity.
+
+
+
+
+code is in project 8 and 9
+
