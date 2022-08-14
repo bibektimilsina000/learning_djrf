@@ -7,11 +7,13 @@ from rest_framework.renderers import JSONRenderer
 from django.http import HttpResponse
 from django.http.response import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.views import View
 
 
-@csrf_exempt
-def createStd(request):
-    if request.method == "GET":
+@method_decorator(csrf_exempt, name="dispatch")
+class StudentAPI(View):
+    def get(self, request, *args, **kwargs):
         json_data = request.body
         stream = io.BytesIO(json_data)
 
@@ -31,7 +33,7 @@ def createStd(request):
         # return HttpResponse(json_data, content_type="application/json")
         return JsonResponse(serilizer.data, safe=False)
 
-    if request.method == "POST":
+    def post(self, request, *args, **kwargs):
         json_data = request.body
 
         stream = io.BytesIO(json_data)
@@ -46,10 +48,11 @@ def createStd(request):
             # json_data = JSONRenderer().render(res)
             # return HttpResponse(json_data, content_type="application/json")
             return JsonResponse(res, safe=False)
-        json_data = JSONRenderer().render(serilizer.errors)
-        return HttpResponse(json_data, content_type="application/json")
+        # json_data = JSONRenderer().render(serilizer.errors)
+        # return HttpResponse(json_data, content_type="application/json")
+        return JsonResponse(serilizer.errors, safe=False)
 
-    if request.method == "PUT":
+    def put(self, request, *args, **kwargs):
         json_data = request.body
         stream = io.BytesIO(json_data)
         python_data = JSONParser().parse(stream)
@@ -66,11 +69,11 @@ def createStd(request):
             # return HttpResponse(json_data, content_type="application/json")
             return JsonResponse(res, safe=False)
 
-        json_data = JSONRenderer().render(serilizer.errors)
-        return HttpResponse(json_data, content_type="application/json")
+        # json_data = JSONRenderer().render(serilizer.errors)
+        # return HttpResponse(json_data, content_type="application/json")
+        return JsonResponse(serilizer.errors, safe=False)
 
-    if request.method == "DELETE":
-
+    def delete(self, request, *args, **kwargs):
         json_data = request.body
         stream = io.BytesIO(json_data)
         python_data = JSONParser().parse(stream)

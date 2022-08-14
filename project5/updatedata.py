@@ -24,7 +24,7 @@ getData()
 
 def post_data():
 
-    data = {"name": "bimal", "roll": 498, "city": "panpauti"}
+    data = {"name": "pandey kumar yadav", "roll": 78, "city": "rampur"}
 
     json_data = json.dumps(data)
 
@@ -39,8 +39,8 @@ def post_data():
 
 def updateData():
     data = {
-        "id": 2,
-        "name": "milan",
+        "id": 3,
+        "name": "sapana",
         "city": "chorbasti",
     }
 
@@ -56,7 +56,7 @@ def updateData():
 
 def deleteData():
 
-    data = {"id": 2}
+    data = {"id": 3}
 
     json_data = json.dumps(data)
 
