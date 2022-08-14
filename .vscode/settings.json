@@ -1,4 +1,7 @@
 {
   "python.formatting.provider": "black",
-  "nuxt.isNuxtApp": false
+  "nuxt.isNuxtApp": false,
+
+  "editor.fontFamily": "'Fira Code'",
+"editor.fontLigatures": true
 }
