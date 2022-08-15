@@ -18,3 +18,14 @@ class StudentViewSet(viewset.ModelViewSet):
 queryset=Student.Object.all()
 serializer_class=StudentSerializer
 
+
+
+read only model view set 
+
+
+it includes only list and retrive actions
+
+class ReadonlyModelViewSet(viewsets.ReadonlyModelViewSet):
+    queryset=Student.Object.all()
+    serializer_class = StudentSerializer
+
