@@ -1,0 +1,148 @@
+ GenericAPI View
+
+ This class extends Rest framework'S APIView class,adding commonly required 
+ behavior for standard list and detail View,
+
+
+ Attributes
+
+ queryset - The query that should be used for returning object from this view .Typically ,you
+            must either set this attribute, or override the get_queryset() insted of acessing this
+            property dirctly,as queryset will get ealuated once,and those result will be cached for all subset  requests
+
+
+serializer_class = The serializer class that should be used for validating and deserializing 
+                input,and for serializing output. Typically, you must either set this attribete, or override the get_serializer_class() method.
+
+lookup_field = The model field that should be used to for performing object lookup of indivisual
+                model instance.Defaults to 'Pk'.
+
+
+lookup_url_kwarg = The URL keyword argument that should be used for object loockup.The URL
+                    conf should include a keyword argument corresponding to this value. if unset this defults to the same as lookup_feild
+
+pagination_class= The pagination_class that should be used when paginating list result 
+                    . Defaults to the same value as the Defult_Pagination_class setting, which
+                    'rest_framework.pagination,PageNumberPagination'.Setting pagination_class=None will dasiable paginotion an this view
+
+filter_backends = A list of filter backend classes that should be used for filtering the queryset.
+                    Defaults to the same value as the Default_filter_backends setting.
+
+
+
+
+Methods
+
+get_queryset(self) = it returns the queryset that should be used for list views,and that should
+                    be used as the base for loockup in detail views. Defults to returning the queryset specified by the queryset attirbuet.
+
+
+                    This method should always be used rather then acesing self.queryset directly,
+                    as self.queryset gets evaluated only once, and those result are cached for all subsequent requests,
+
+
+get_object(self)- it returns an object instance that should be used for detail views.Default to
+                    using the lockup_field paramater to filter the base queryset
+
+
+get_serializer_class(self) = It returns the class that should be used for the serialiser.
+                                Defaults to returning the serialiser_class attribute.
+
+
+get_serializer_context(self) = it returns the dictionary contaning any extra context 
+                                that should be supplied to the serialiser.Defaults to include 'request','view' and 'format' keys.
+
+
+get_serializer(self,instance=None,data=None, many= false,partial=false)=it retunns
+                                                                         a serializer instance
+
+
+get_paginated_response(self,data)-It returns a paginated style Response object.
+
+paginated_queryset(self,queryset) = paginated a quaryset if required,either returning
+                                    a page object,or None if paginatoin is not configerad for 
+                                    this view.
+
+filter_quertyset(self,queryset) == given a quryset,filter it with whichever filter
+                                    backends are in use,returning a new queryset.
+
+
+
+
+
+Mixins
+
+one of the big wins of using class_based views is that it allows us to easily compose 
+reuable bit of behavior
+
+The create/retrie/update/delete perations thet we,ve been using so far are going to be
+pretty similar for any model_backend API views we create.
+
+Those bit of common behavior are implement in REST framework's Mixins
+class.
+
+The Mixins class provide the action that are used to provide teh basic view
+behavior.
+
+Note that the Mixins classes proide action method s rather then defining the handler compositiino
+behaior. 
+The mixin classen can be importetd form the Rest-framework.mixits
+
+
+
+Mixins
+
+list Model mixins 
+
+it provides  a list(request,*args,**kwargs)method, that implement listing a queryset
+
+if the queryset is populated,this return 200 OK response,with a serializer representation of the 
+queryset as the body of the response.The response data may optionally be paginated.
+
+eg:
+
+
+from rest_framework.mixins import listmodelMixing
+form rest_framework.generics import GenericAPIView
+
+class StudentList(listmodelMixing,GenericAPIView):
+    queryset=Student.object.all()
+    serialiser_class=StudentSerilizer
+    def get(self,request,*args,**kwargs):
+        return self.list(request,*args,**kwargs)
+
+
+
+CreateModel Mixins
+
+it cerate and save a new medel instance.
+it return 201 if cerated else return 400 bad request status code 
+
+
+from rest_framework.mixins import listmodelMixing
+form rest_framework.generics import GenericAPIView
+
+class crateSTUdent(listmodelMixing,GenericAPIView):
+    queryset=Student.object.all()
+
+    serialiser_class=StudentSerilizer
+    def post(self,request,*args,**kwargs):
+        return self.create(request,*args,**kwargs)
+
+
+
+retirve Medel mixins
+
+
+UpdateMOdelmixins
+
+DestroyModelMixins
+
+        delete model instance
+
+
+
+code is in project 10
+
+
+
