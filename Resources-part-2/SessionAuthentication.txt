@@ -1,0 +1,55 @@
+
+SessionAuthentication
+
+    The authentication scheme use Django's default session backend for authentication.
+    Session authentication is appropriate far AJAX clients that are running in the 
+    same session context as your website.
+
+    If successfully authenticated,SessionAuthentication provides the following credentials.
+
+    request.user will be a Django User instance.
+    request.auth will be none 
+
+    Unauthenticated response that are denied permission will result in an HTTP 403 
+    Forbidden response.
+
+
+    If you are using an AJAX style API with SessionAuthentication,you will need to make
+    sure you include a valid CSRF Token for any "unsafe" HTTP methods calls,such as 
+    PUT,PATCH,POST or DELETE requests.
+
+
+
+
+        Permission 
+
+            Permission are used to grant or deny access for different class of users to 
+            different class of users to different parts of the API.
+
+            Permission check are always run at the very start of the view,before any
+            other code is allowed to proceed.
+
+            Permission check will typically use the authentication information in the 
+            request.user and request.auth properties to determine if the incoming request
+            should be permitted.
+
+
+        Permission Classes
+
+            Permission in REST framework are always defined as a list of permission classes.
+
+            # AllowAny
+            # IsAuthenticated
+            # IsAdminUser
+            # IsAuthenticatedOrReadOnly
+            # DjangoModelPermission
+            # DjangoModelPermissionOrAnonReadOnly
+            # DjangoObjectPermissions
+            # Custom Permission
+
+
+
+
+            IsAuthenticatedOrReadOnly
+
+                
