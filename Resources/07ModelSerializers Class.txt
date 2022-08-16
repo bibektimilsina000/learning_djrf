@@ -1,0 +1,35 @@
+THE Model Serializer Class
+
+
+The Model Serializer Class provides a shortcut that lets you automatically crate a 
+Serializer Class with field that crossponds to the Model field
+
+The Model Serializer Class same as regular Serializer class except :
+   
+   - It will automatically generates the field for you,based on Model
+   
+   - It will automatically generates the  validators for Serializer
+    such as unique_together_validators
+
+    It will simple default implementations of crate() and update().
+
+
+how to create Model Serializer class 
+
+1 create Serializer.py file like in normal Serializer class
+2 imort Serializer
+3 use  class NameSerializers(serializers.ModelSerializers):
+4 use  class Meta:
+           Model=modelName
+           fields=['id','name','roll','city']
+
+           . fields= '__all__' ==> to include all fields 
+
+           . exclude=['id'] ==> to exclude specific fields
+
+
+projct is in project 7
+
+
+
+

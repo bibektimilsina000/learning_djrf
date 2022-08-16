@@ -1,0 +1,31 @@
+    ModelViewSet Class
+
+
+The   Model ViewSet class inherits from Generic API view and includes
+implementations for various actions,by mixing in the behavior of the various
+mixin class
+
+
+The action provieds by the ModelViewSet class are list(),retrive(),
+create(),update(),partial_update(), and destroy() .You can use any 
+of the standard attributes or method overrides provide by GenericAPIView
+
+
+
+code:
+
+class StudentViewSet(viewset.ModelViewSet):
+queryset=Student.Object.all()
+serializer_class=StudentSerializer
+
+
+
+read only model view set 
+
+
+it includes only list and retrive actions
+
+class ReadonlyModelViewSet(viewsets.ReadonlyModelViewSet):
+    queryset=Student.Object.all()
+    serializer_class = StudentSerializer
+

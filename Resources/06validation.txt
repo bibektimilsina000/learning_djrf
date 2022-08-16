@@ -1,0 +1,83 @@
+Validation
+
+way of Validation
+
+
+. filed level Validation
+. object bValidation
+. validators
+
+prioraty is  validator> filed level Validation>object Validation
+
+Field Level Validation
+
+it is done for indivisual field 
+
+inside the serializers class
+
+def validate_field Name:
+    code
+
+
+from rest_frameowrk imort serializers
+class studentSeriliser(serializers.Selizer):
+    name=serializers.charfelid(max)
+    roll=serializers.intigerfelid(max)
+    city=serializers.charfelid(max)
+
+
+    def validate_roll(self,value):
+        if value >=200
+            raise serializers.ValidationError('seat full')
+        return value
+
+
+object level Validation
+
+is is used if multiple field is to be validate
+data inside field can be accessed in dict form 
+
+
+syntx:
+
+    def Validate(self,data)
+    here 'data' is the python dictionary of fields value
+
+    example:
+
+    class studentSeriliser(serializers.Selizer):
+        name=serializers.charfelid(max)
+        roll=serializers.intigerfelid()
+        city=serializers.charfelid(max)
+
+
+
+        def validate(self,data):
+
+            nm=data.get('name')
+            ct=data.get('city')
+            rol=data.get('roll')
+
+            if nm.lower() == 'name' and ct.lower() !='city':
+                raise serializers.ValidationError(city must be city)
+            return data
+
+
+
+Validator
+
+valitor can ba reuse
+
+
+
+
+eg 
+
+from rest_frameowrk imort serializers
+
+def startWithR(value)
+    if value['0'].lower() !='r':
+        raise serializers.ValidationError('Name must be start with r')
+
+class studentSeriliser(serializers.Selizer):
+    name=charfelid(max,validator=[startWithR])
