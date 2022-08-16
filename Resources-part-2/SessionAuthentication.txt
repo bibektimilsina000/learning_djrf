@@ -48,8 +48,78 @@ SessionAuthentication
             # Custom Permission
 
 
+            Third Party
+             DRF-Acess Policy
+             Composed Permission
+             REST Condition
+             DRY Rest Permissions
+             Django Rest Framework Roles
+             Django Rest Framework API Key
+             Django Rest Framework Role Filter
+             Django Rest Framework PSQ
 
 
             IsAuthenticatedOrReadOnly
 
+                The IsAuthenticatedOrReadOnly Will allow authenticated user to perform 
+                any request.Request for unauthorised user will only be permitted if the 
+                request methods is one of the 'safe' methods: GET,HEAD or OPTIONS
+
+
+                This Permission is suitable if you allow red permission to anonymous users,
+                and only allow write permission to authenticated users.
+
+
+            DjangoModelPermission
+
+                This Permission class ties into Django's standard django.contrib.auth model permission.
+                This Permission must only be applied to views that have a queryset 
+                property set. Authorization will only be granted if the user is authenticated and has
+                the relevent model permission assigned.
+
+
+                    # Post request require the user to have the add permission on the model.
+                    # Put  and PATCH requests are require the user to have the change permission
+                      on the model.
+                    # DELETE requests require the user to have the delete permission on the model.
                 
+                The default behaviour can also be overridden to support custom model permission.
+                For example,you might want to include a view model permission for GET requests.
+                To use custom model permission,override DjangoModelPermission and set the perms_map
+                property.
+
+
+            DjangoModelPermissionOrAnonReadOnly
+                Similar to DjangoModelPermission, but also allow Unauthenticated users
+                to have read-only access to the API.
+
+
+
+            DjangoObjectPermissions
+
+                This permission Class ties into Django's standard object permission
+                framework that allows per-object permission on models.In order to use
+                this permission class, you'll also need to add a permission backend 
+                that support object-level permission,such as django-guardian.
+
+                    # Post request require the user to have the add permission on the model.
+                    # Put  and PATCH requests are require the user to have the change permission
+                      on the model.
+                    # DELETE requests require the user to have the delete permission on the model.
+
+            Custom Permission
+
+            To implement a custom permission, override BasePermission and implement either,
+            or both, of the following methods:
+                # has_permission(self,request,view)
+                # has_object_permission(self,request,view)
+            The methods should return True if the request should be granted access,
+            and False otherwise.
+
+
+            code :
+
+                custompermissions.property
+
+                class MyPermission(BasePermission)
+                    def has_permission(self,request,view)
