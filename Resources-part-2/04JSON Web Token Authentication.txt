@@ -1,0 +1,72 @@
+        JSON Web Token(JWT)
+
+    JSON Web Token is a fairly new standard which can be used for Token-based
+    authentication. Unlike the built-in TokenAuthentication Scheme,JWT Authentication.
+    Unlike The built-in built-in TokenAuthentication Scheme ,
+    JWT Authentication doesn't need to use a database to validate a Token.
+
+
+    How To install Simple JWT
+
+        Pip install djangorestframework-simplejwt
+
+
+    Configure simplejwt
+
+
+        setting.py ==> globelly 
+
+        REST_FRAMEWORK={
+            'DEFAULT_AUTHENTICATION_CLASSES'=(
+                'rest_framework_simplejwt.authentication.JWTAuthentication'
+            )
+        }
+
+
+        locally
+
+        urls.py
+
+        from  rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView
+
+        urlpatterns=[
+            .
+            .
+            .
+            path('gettoken/',TokenObtainPairView.as_view(),name='token_obtain_pair'),
+            path('refreshtoken/',TokenRefreshView.as_view(),name='token_refresh'),
+
+            .
+            .
+            .
+
+        ]
+
+        You can also include a route fo verify token 
+
+        import TokenVerifyView in url.py
+
+         path('verify/',TokenVerifyView.as_view(),name='token_verify'),
+
+
+
+
+
+    JWT Default setting
+
+    from datatime imort timedelta
+
+    sipmle_jwt={
+        'ACCESS_token_lifetime_': timedelta(minuts=5),
+        'RefRESH_TOKEN_LIFETIME':timedelta(days=1),
+        'ROTATE_REFRESH_ROTATION':True'
+
+    }
+
+
+    Use JWT
+
+
+
+
+        
