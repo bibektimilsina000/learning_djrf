@@ -1,0 +1,125 @@
+ Why use authentication And Permission
+
+ currently our API does not have any restrictions on who can edit or delete data.
+ we,d like to have some more advance behavior in order to make sure that:
+    # Data is always associated with a creator.
+    # Only authenticated user may cerate Data.
+    # Only the creator of the data may update or delete it.
+    # Unauthenticated request should have full read-only access.
+
+
+    Authentication
+
+        Authentication is the mechanism of associating an incoming request 
+        with a set of identifying credentials. Such as the user the request came
+        from, or the token that it was signed with.The Permission and throttling
+        policies can then use those credentials to determine if the request should
+        be permitted.
+
+        Authentication is always run at the very start of the view, before the 
+        Permission and throttling checks occur, and before any other code is
+        allowed to processed.
+
+        REST Framework provides a number of authenticated schemes out of the box,
+        and also allows you to implement custom schemes.
+        
+        # BasicAuthentication
+        # SessionAuthentication
+        # TokenAuthentication
+        # RemoteUserAuthentication
+        # Custom authentication
+
+
+
+
+    BasicAuthentication
+
+        This authentication scheme uses HTTP BasicAuthentication,signed against a user's
+        username and password
+
+        Basic authentication is generally only appropriate for testing.
+        
+        If successfully authenticated, BasicAuthentication provides the following
+        credentials.
+
+            # request.user will be a Django User instance
+            # request.auth will be None
+
+        Unauthenticated response that are denied Permission will result in an HTTP 401 Unauthorized
+        response with an appropriate WWW-Authenticate header.
+            For Example:
+
+                WWW-Authenticate : Basic realm="api"
+
+        ::::Note::::
+            If  you use BasicAuthentication in production you must ensure that
+            your API is only available over https.
+
+            you should ensure that you API client will always re-request
+            the username and password at login,and will never store those 
+            details to persistent storage.
+
+
+
+
+    Permission
+
+        Permission are used to grant or deny access for different classes of 
+        users to different parts of API.
+
+        Permission checks are always run at the very start of the view,before
+        any other code is allowed to processed.
+
+        Permission checks will typically use the authentication information in the
+        request.user and request.auth property to determine if the incoming request
+        should be permitted.
+
+
+
+    Permission Classes
+
+        Permission in REST Framework are always defined as a list of 
+        Permission classes.
+
+            # AllowAny
+            # IsAuthenticated
+            # IsAdminUser
+            # IsAuthenticatedOrReadOnly
+            # DjangoModelPermissions
+            # DjangoModelPermissionsOrAnonReadOnly
+            # DjangoObjectPermission
+            # Custom Permission
+
+
+
+            AllowAny
+
+                The AllowAny permission class will allow unrestricted access,
+                regardless of if the request was authenticated or unauthenticated.
+
+                The Permission in not strictly required,since you can achieve the same result 
+                by using an empty list or tuple for the permissions setting,but
+                you may find it useful to specify this class because it makes the
+                intention explicit.
+
+            
+            IsAuthenticated
+
+                The IsAuthenticated permission class will deny permission to any unauthenticated
+                user,and allow permission otherwise.
+
+                This permission is suitable if you want your API to only be accessible 
+                to registered user.
+
+            IsAdminUser
+                The IsAdminUser Permission class will deny permission to any user,
+                unless user.is_staff is True in which case permission will be allowed.
+                This permission is suitable if you want your API to only be accessible
+                to a subset of trusted administrators.
+
+
+
+ project is in projects-part-2/project
+
+
+
