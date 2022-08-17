@@ -1,0 +1,108 @@
+Pagination 
+
+REST_FRAMEWORK includes support for customizable Pagination style.this
+allows you to modify how large result set are split into indivisual pages of 
+data.
+
+
+ 1 PageNumberPagination
+ 2 LimitOffsetPaginaton
+ 3 CursorPagination
+
+
+ Pagination Global Setting
+
+ The Pagination style may be set Globally, using the 
+ DEFAULT_PAGINATION_CLASS and PAGE_SIZE setting keys.
+
+ REST_FRAMEWORK={
+    'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE':5
+ }
+
+
+
+Pagination Per View
+
+You can set the paginotion class on an indivisual view by using the Pagination_class attribute.
+
+
+
+class StudentList(ListAPIView):
+        queryset=Student.objects.all()
+        serializers_class=StudentSerializers
+        filter_backends=[OrderingFilter]
+        ordering_fields=['name','city']
+        ordering_fields=__al__
+        Pagination_class=PageNumberPagination
+
+
+
+
+        PageNumberPagination
+
+        This paginotion style accept a single number page number in the request query parameter.
+
+        To enable the page PageNumberPagination style Globally , use the following configuration,
+        and set the PAGE_SIZE as desired:
+
+        REST_FRAMEWORK={
+            'DEFAULT_PAGINATION_CLASS':
+            'rest_framework.pagination.PageNumberPagination',
+            'PAGE_SIZE':5
+        }
+
+
+request
+
+http://Example.com/api/user?page=3
+
+
+PageNumberPagination
+
+The PageNumberPagination class includes a number of attribute that may be overridden to modify the
+pagination style.
+
+To set these attribute you should override The paginator class to use.Defult is 
+djanog.core.paginotor.Paginotor,Which should be fine for most use cases.
+
+
+use PageNumberPagination 
+
+class myPageNumberPaginatin(PageNumberPagination):
+    page_size=5
+    page_size_query_param='reocords'
+    max_page_size=7
+
+
+
+
+class StudentList(ListAPIView):
+        queryset=Student.objects.all()
+        serializers_class=StudentSerializers
+        filter_backends=[OrderingFilter]
+        ordering_fields=['name','city']
+        ordering_fields=__al__
+        Pagination_class=myPageNumberPaginatin
+
+
+
+
+
+
+LimitOffsetPaginaton
+
+The pagination style mirror the syntax used when looking up multiple Database
+records. The client includes both a 'limit' and an 'offset' query parameter.The
+limit indicates the maximum number of item to return , and is equavalent to the 
+page_size in other style.The offset indicates the starting pasinon of the query
+in relation to the complete set of unpaginated items.
+
+to enable the LimitOffsetPaginaton style Globally ,use the following configurationA
+
+
+ REST_FRAMEWORK={
+        'DEFAULT_PAGINATION_CLASS':
+        [ rest_framework.pagination.LimitOffsetPaginaton']
+    }
+

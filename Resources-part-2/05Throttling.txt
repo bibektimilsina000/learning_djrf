@@ -1,0 +1,40 @@
+Throttling
+
+Throttling is similar to permission, in that it determines of a request should be authorized.
+Throttles indicate a temporary state, and are used to control the rate of request that client
+can make to an AIP.
+
+
+You AIP might have a restrictive throttle for unauthenticated request, and a less restrictive throttle
+for authenticated requests.
+
+The Default throttling policy may be set globally,using the 
+
+DEAFULT_THROTTLE_CLASSES and DEFAULT_THROTTLE_RATES settings.
+
+For example:
+
+REST_FRAMEWORK={
+    'DEAFULT_THROTTLE_CLASSES':[
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ]
+}
+
+'DEAFULT_THROTTLE_RATES':{
+    'anon':'100/day',
+    'user':'100/day',
+}
+
+
+
+AnonRateThrottle ==> for anyonous user
+
+UserRateThrottle ===> for user
+
+
+ScopedRateTHrottle====> for specific part of AIP
+
+
+
+

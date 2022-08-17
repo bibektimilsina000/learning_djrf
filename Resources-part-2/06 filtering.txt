@@ -1,0 +1,151 @@
+
+Filtering
+
+The simple way to filter the queryset of any view that subclass 
+GenericApi iewis to override the .get queryset() method.
+
+
+
+
+ def get_queryset(self,request):
+    user=self.request.user
+    return Student.ojects.filter(passby=user)
+
+
+
+
+
+    Generic Filtering  
+
+        REST_FRAMEWORK also includes support for Generic filtering backends that
+        allows you to easly constract complex serches and filter.
+
+
+    Django FIlter backends
+
+    The django-filter library includes a djangoFilterBackend class which support
+    highly customizable fields filtering for rest_framework .
+
+    To Use Django filterBackend, first install django-filter
+
+    pip install django-filter
+
+    INSTALLED_APPS=[
+        'django_filters',
+    ]
+
+
+
+    Global Setting
+
+    REST_FRAMEWORK={
+        'DEFAULT_FILTER_BACKENDS':
+        ['django_filters.rest_framework.djangoFilterBackend']
+    }
+
+
+
+    Per View Setting
+
+    YOu can set the filter backends on a per-view,or per-viewset baised,using
+    the GenericApiView class-based views.
+
+    from django_filters.rest_framework import DjangoFilterBackend
+
+    class StudentListView(ListAPIView):
+        queryset=Student.objects.all()
+        serializers_class=StudentSerializers
+        filter_backends=[DjangoFilterBackend]
+
+
+
+DjangoFilterBackend
+
+If all you need is simple equality-based filtering,you can set a filters_fields attribute on the 
+view,or viewset,listing the set of fields you wish to filter againest.
+
+
+class StudentList(ListAPIView):
+        queryset=Student.objects.all()
+        serializers_class=StudentSerializers
+        filter_backends=[DjangoFilterBackend]
+        filterset_fields=['name','city']
+
+
+
+
+
+SearchFilter
+
+
+The SearchFilter class support simple single query parameter based searching,and  is based on the 
+django admin's search functionality
+
+The SearchFilter class will only be applied if the view has a search fields attribute
+set.The search_fields attribute should be a list of names of text type fields on the model,
+such as CharField of Textfeld 
+
+
+
+from rest_framework.filter import SearchFilter
+
+
+class StudentList(ListAPIView):
+        queryset=Student.objects.all()
+        serializers_class=StudentSerializers
+        filter_backends=[SearchFilter]
+        search_fields=['name','city']
+
+
+
+
+SearchFilter  
+
+# '^' Start-with search
+# '=' Exact matches
+# '@' Full-Text search (Currently only supported Django's PostgresSQL)
+# '$' Regex search.
+
+Example:-
+
+    search_fields=['^name',]
+
+
+    custum search params 
+
+    REST_FRAMEWORK={
+        'SEARCH_PARAM':'q'
+    }
+
+
+
+
+Ordering Filter
+
+
+The OrderingFilter class support simple query parameter controlled ordering of result 
+
+http://localhost:port/student/api/?ordering=name
+
+The client may also specify revirse ordering by prefix the field name with '-',like so:
+
+http://localhost:port/student/api/?ordering=-name
+
+
+Multiple ordering may also be sperified :
+http://Example.com/api/user?ordering=name,account
+
+
+it recomned that you explicitly specify which field the api should allowing in the ordering filter.
+You can do this by setting ordering_fields attributes on the view like so.
+
+
+class StudentList(ListAPIView):
+        queryset=Student.objects.all()
+        serializers_class=StudentSerializers
+        filter_backends=[OrderingFilter]
+        ordering_fields=['name','city']
+        ordering_fields=__al__
+
+
+        
